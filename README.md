@@ -1,4 +1,4 @@
-# Surpass – Junior Data Architect Take-Home Assignment
+# Surpass - Junior Data Architect Take-Home Assignment
 
 End-to-End data engineering pipeline analyzing vehicle data from Israel's Ministry of Transport open dataset.
 
@@ -24,8 +24,7 @@ API → Raw Data (mrr_fct) → Cleaned DWH → Enriched Analytics → Business I
 SURPASS/
 │
 ├── API Data Extraction/
-│   ├── extract_vehicles.py        # Part A – API extraction with pagination
-│   ├── mrr_fct_vehicle.csv        # Raw CSV output (all fields as text)
+│   ├── extract_vehicles.py        # Part A - API extraction with pagination
 │   └── offset_checkpoint.txt      # Checkpoint for resuming extraction
 │
 ├── DWH/
@@ -50,6 +49,15 @@ SURPASS/
 
 ---
 
+### Dataset Note
+
+The raw file `mrr_fct_vehicle.csv` is not included in this repository because it exceeds GitHub's file size limit.
+To reproduce the pipeline, generate it by running:
+
+```bash
+python "API Data Extraction/extract_vehicles.py"
+```
+
 ##  Setup Instructions
 
 ### 1. Prerequisites
@@ -62,8 +70,8 @@ SURPASS/
 ### 2. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
-cd SURPASS
+git clone https://github.com/Revital09/Surpass-Home_Assignment.git
+cd Surpass-Home_Assignment
 ```
 
 ### 3. Install Python Dependencies
