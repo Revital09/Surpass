@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+*.log
+.idea/
+
+# large dataset
+API Data Extraction/mrr_fct_vehicle.csv
