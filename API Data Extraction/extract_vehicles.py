@@ -12,7 +12,7 @@ max_retries = 3
 
 session = requests.Session()
 
-# Resume מנקודת checkpoint
+# Resume from checkpoint
 if os.path.exists(checkpoint_file):
     with open(checkpoint_file, "r") as f:
         offset = int(f.read().strip())

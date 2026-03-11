@@ -37,6 +37,6 @@ for i, chunk in enumerate(
         if_exists="append",
         index=False
     )
-    print(f"Loaded chunk {i}: len(chunk)")
+    print(f"Loaded chunk {i}")
 
 print("Finished loading CSV into mrr_fct.vehicle")
