@@ -1,6 +1,4 @@
--- ===========================
 -- SCHEMA: mrr_fct
--- ===========================
 CREATE SCHEMA IF NOT EXISTS mrr_fct;
 
 CREATE TABLE IF NOT EXISTS mrr_fct.vehicle (
@@ -30,9 +28,7 @@ CREATE TABLE IF NOT EXISTS mrr_fct.vehicle (
     kinuy_mishari            TEXT
 );
 
--- ===========================
 -- SCHEMA: dwh
--- ===========================
 CREATE SCHEMA IF NOT EXISTS dwh;
 
 CREATE TABLE IF NOT EXISTS dwh.vehicle (
@@ -58,7 +54,7 @@ CREATE TABLE IF NOT EXISTS dwh.vehicle (
     zmig_ahori               VARCHAR(30),
     sug_delek_nm             VARCHAR(30),
     horaat_rishum            INTEGER,
-    moed_aliya_lakvish       VARCHAR(10),
+    moed_aliya_lakvish       DATE,
     kinuy_mishari            VARCHAR(100),
     load_ts                  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
