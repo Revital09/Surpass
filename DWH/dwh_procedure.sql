@@ -16,36 +16,79 @@ BEGIN
 
     WITH cleaned AS (
         SELECT
-            -- numeric/date columns
-            NULLIF(LOWER(TRIM(COALESCE(_id,                   ''))), 'null') AS _id,
-            NULLIF(LOWER(TRIM(COALESCE(mispar_rechev,         ''))), 'null') AS mispar_rechev,
-            NULLIF(LOWER(TRIM(COALESCE(tozeret_cd,            ''))), 'null') AS tozeret_cd,
-            NULLIF(LOWER(TRIM(COALESCE(degem_cd,              ''))), 'null') AS degem_cd,
+            NULLIF(LOWER(TRIM(COALESCE(_id,''))), 'null') AS _id,
+            NULLIF(LOWER(TRIM(COALESCE(mispar_rechev,''))), 'null') AS mispar_rechev,
+            NULLIF(LOWER(TRIM(COALESCE(tozeret_cd,''))), 'null') AS tozeret_cd,
+            NULLIF(LOWER(TRIM(COALESCE(degem_cd,''))), 'null') AS degem_cd,
             NULLIF(LOWER(TRIM(COALESCE(ramat_eivzur_betihuty,''))), 'null') AS ramat_eivzur_betihuty,
-            NULLIF(LOWER(TRIM(COALESCE(kvutzat_zihum,         ''))), 'null') AS kvutzat_zihum,
-            NULLIF(LOWER(TRIM(COALESCE(shnat_yitzur,          ''))), 'null') AS shnat_yitzur,
-            NULLIF(LOWER(TRIM(COALESCE(mivchan_acharon_dt,    ''))), 'null') AS mivchan_acharon_dt,
-            NULLIF(LOWER(TRIM(COALESCE(tokef_dt,              ''))), 'null') AS tokef_dt,
-            NULLIF(LOWER(TRIM(COALESCE(tzeva_cd,              ''))), 'null') AS tzeva_cd,
-            NULLIF(LOWER(TRIM(COALESCE(horaat_rishum,         ''))), 'null') AS horaat_rishum,
-            NULLIF(LOWER(TRIM(COALESCE(moed_aliya_lakvish,    ''))), 'null') AS moed_aliya_lakvish,
+            NULLIF(LOWER(TRIM(COALESCE(kvutzat_zihum,''))), 'null') AS kvutzat_zihum,
+            NULLIF(LOWER(TRIM(COALESCE(shnat_yitzur,''))), 'null') AS shnat_yitzur,
+            NULLIF(LOWER(TRIM(COALESCE(mivchan_acharon_dt,''))), 'null') AS mivchan_acharon_dt,
+            NULLIF(LOWER(TRIM(COALESCE(tokef_dt,''))), 'null') AS tokef_dt,
+            NULLIF(LOWER(TRIM(COALESCE(tzeva_cd,''))), 'null') AS tzeva_cd,
+            NULLIF(LOWER(TRIM(COALESCE(horaat_rishum,''))), 'null') AS horaat_rishum,
+            NULLIF(LOWER(TRIM(COALESCE(moed_aliya_lakvish,''))), 'null') AS moed_aliya_lakvish,
 
-            -- text columns: preserve original case
-            CASE WHEN LOWER(TRIM(COALESCE(sug_degem,    ''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(sug_degem)    END AS sug_degem,
-            CASE WHEN LOWER(TRIM(COALESCE(degem_nm,     ''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(degem_nm)     END AS degem_nm,
-            CASE WHEN LOWER(TRIM(COALESCE(ramat_gimur,  ''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(ramat_gimur)  END AS ramat_gimur,
-            CASE WHEN LOWER(TRIM(COALESCE(degem_manoa,  ''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(degem_manoa)  END AS degem_manoa,
-            CASE WHEN LOWER(TRIM(COALESCE(baalut,       ''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(baalut)       END AS baalut,
-            CASE WHEN LOWER(TRIM(COALESCE(misgeret,     ''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(misgeret)     END AS misgeret,
-            CASE WHEN LOWER(TRIM(COALESCE(tzeva_rechev, ''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(tzeva_rechev) END AS tzeva_rechev,
-            CASE WHEN LOWER(TRIM(COALESCE(zmig_kidmi,   ''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(zmig_kidmi)   END AS zmig_kidmi,
-            CASE WHEN LOWER(TRIM(COALESCE(zmig_ahori,   ''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(zmig_ahori)   END AS zmig_ahori,
-            CASE WHEN LOWER(TRIM(COALESCE(sug_delek_nm, ''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(sug_delek_nm) END AS sug_delek_nm,
-            CASE WHEN LOWER(TRIM(COALESCE(kinuy_mishari,''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(kinuy_mishari)END AS kinuy_mishari,
+            CASE
+                WHEN LOWER(TRIM(COALESCE(sug_degem,''))) IN ('', 'null', 'none', '<null>')
+                THEN NULL ELSE TRIM(sug_degem)
+            END AS sug_degem,
+
+            CASE
+                WHEN LOWER(TRIM(COALESCE(degem_nm,''))) IN ('', 'null', 'none', '<null>')
+                THEN NULL ELSE TRIM(degem_nm)
+            END AS degem_nm,
+
+            CASE
+                WHEN LOWER(TRIM(COALESCE(ramat_gimur,''))) IN ('', 'null', 'none', '<null>')
+                THEN NULL ELSE TRIM(ramat_gimur)
+            END AS ramat_gimur,
+
+            CASE
+                WHEN LOWER(TRIM(COALESCE(degem_manoa,''))) IN ('', 'null', 'none', '<null>')
+                THEN NULL ELSE TRIM(degem_manoa)
+            END AS degem_manoa,
+
+            CASE
+                WHEN LOWER(TRIM(COALESCE(baalut,''))) IN ('', 'null', 'none', '<null>')
+                THEN NULL ELSE TRIM(baalut)
+            END AS baalut,
+
+            CASE
+                WHEN LOWER(TRIM(COALESCE(misgeret,''))) IN ('', 'null', 'none', '<null>')
+                THEN NULL ELSE TRIM(misgeret)
+            END AS misgeret,
+
+            CASE
+                WHEN LOWER(TRIM(COALESCE(tzeva_rechev,''))) IN ('', 'null', 'none', '<null>')
+                THEN NULL ELSE TRIM(tzeva_rechev)
+            END AS tzeva_rechev,
+
+            CASE
+                WHEN LOWER(TRIM(COALESCE(zmig_kidmi,''))) IN ('', 'null', 'none', '<null>')
+                THEN NULL ELSE TRIM(zmig_kidmi)
+            END AS zmig_kidmi,
+
+            CASE
+                WHEN LOWER(TRIM(COALESCE(zmig_ahori,''))) IN ('', 'null', 'none', '<null>')
+                THEN NULL ELSE TRIM(zmig_ahori)
+            END AS zmig_ahori,
+
+            CASE
+                WHEN LOWER(TRIM(COALESCE(sug_delek_nm,''))) IN ('', 'null', 'none', '<null>')
+                THEN NULL ELSE TRIM(sug_delek_nm)
+            END AS sug_delek_nm,
+
+            CASE
+                WHEN LOWER(TRIM(COALESCE(kinuy_mishari,''))) IN ('', 'null', 'none', '<null>')
+                THEN NULL ELSE TRIM(kinuy_mishari)
+            END AS kinuy_mishari,
 
             -- standardize manufacturer name variations
             CASE
-                WHEN LOWER(TRIM(COALESCE(tozeret_nm, ''))) IN ('', 'null', 'none', '<null>') THEN NULL
+                WHEN LOWER(TRIM(COALESCE(tozeret_nm, ''))) IN ('', 'null', 'none', '<null>')
+                    THEN NULL
+
                 WHEN TRIM(tozeret_nm) ILIKE '%אאודי%' OR TRIM(tozeret_nm) ILIKE '%אודי%'
                     THEN 'אאודי'
                 WHEN TRIM(tozeret_nm) ILIKE '%אופל%'

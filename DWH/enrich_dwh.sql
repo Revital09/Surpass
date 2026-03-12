@@ -1,13 +1,13 @@
 -- ADD COLUMNS
 ALTER TABLE dwh.vehicle
-    ADD COLUMN IF NOT EXISTS vehicle_age            INTEGER,
-    ADD COLUMN IF NOT EXISTS age_category           VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS vehicle_age INTEGER,
+    ADD COLUMN IF NOT EXISTS age_category VARCHAR(20),
     ADD COLUMN IF NOT EXISTS years_since_registration INTEGER,
-    ADD COLUMN IF NOT EXISTS is_first_owner         BOOLEAN,
-    ADD COLUMN IF NOT EXISTS license_status         VARCHAR(20),
-    ADD COLUMN IF NOT EXISTS fuel_category          VARCHAR(20),
-    ADD COLUMN IF NOT EXISTS pollution_level        VARCHAR(20),
-    ADD COLUMN IF NOT EXISTS manufacturer_region    VARCHAR(20);
+    ADD COLUMN IF NOT EXISTS is_first_owner BOOLEAN,
+    ADD COLUMN IF NOT EXISTS license_status VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS fuel_category VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS pollution_level VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS manufacturer_region VARCHAR(20);
 
 
 -- 1. Vehicle Age
@@ -44,7 +44,8 @@ SET license_status = CASE
     WHEN tokef_dt < CURRENT_DATE                        THEN 'Expired'
     WHEN tokef_dt <= CURRENT_DATE + INTERVAL '90 days'  THEN 'Expiring Soon'
     ELSE 'Active'
-END;
+END
+WHERE license_status IS NOT NULL;
 
 -- 4. Fuel Category
 UPDATE dwh.vehicle
@@ -57,7 +58,8 @@ SET fuel_category = CASE
     WHEN TRIM(sug_delek_nm) = 'חשמל'            THEN 'Electric'
     WHEN TRIM(sug_delek_nm) = 'גפ"מ'            THEN 'Other'
     ELSE 'Other'
-END;
+END
+WHERE fuel_category IS NOT NULL;
 
 -- 5. Environmental Classification
 UPDATE dwh.vehicle
@@ -67,7 +69,8 @@ SET pollution_level = CASE
     WHEN kvutzat_zihum BETWEEN 11 AND 15 THEN 'High'
     WHEN kvutzat_zihum >= 16             THEN 'Very High'
     ELSE NULL
-END;
+END
+WHERE pollution_level IS NOT NULL;
 
 -- 6. Manufacturer Region
 UPDATE dwh.vehicle
@@ -84,7 +87,9 @@ SET manufacturer_region = CASE
     WHEN tozeret_nm IN ('גילי', 'גרייט וול', 'ניאו', 'גי.אי.סי')
         THEN 'Chinese'
     ELSE 'Other'
-END;
+END
+WHERE manufacturer_region IS NOT NULL;
+
 
 -- INDEXES
 CREATE INDEX IF NOT EXISTS idx_vehicle_age_category
