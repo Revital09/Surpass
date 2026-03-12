@@ -26,7 +26,8 @@ SURPASS/
 │
 ├── API Data Extraction/
 │   ├── extract_vehicles.py     
-│   ├── offset_checkpoint.txt     
+│   ├── offset_checkpoint.txt 
+│   ├── mrr_fct_vehicle.csv
 │   └── load_raw_to_db.py          
 │
 │
