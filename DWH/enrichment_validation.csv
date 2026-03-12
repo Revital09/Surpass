@@ -1,0 +1,25 @@
+age_category,Mature,1620842
+age_category,Recent,999012
+age_category,New,915642
+age_category,Old,559612
+fuel_category,Gasoline,3355376
+fuel_category,Diesel,385728
+fuel_category,Electric,221265
+fuel_category,Hybrid,115176
+fuel_category,Other,17563
+is_first_owner,false,3554569
+is_first_owner,true,271586
+is_first_owner,NULL,268953
+license_status,Active,2767987
+license_status,Expiring Soon,912074
+license_status,Expired,415047
+manufacturer_region,Japanese,1560142
+manufacturer_region,Korean,1047116
+manufacturer_region,European,935510
+manufacturer_region,American,231515
+manufacturer_region,Other,211425
+manufacturer_region,Chinese,109400
+pollution_level,High,2894882
+pollution_level,Low,512250
+pollution_level,NULL,425128
+pollution_level,Medium,262848

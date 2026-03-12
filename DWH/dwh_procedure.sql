@@ -43,62 +43,115 @@ BEGIN
             CASE WHEN LOWER(TRIM(COALESCE(sug_delek_nm, ''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(sug_delek_nm) END AS sug_delek_nm,
             CASE WHEN LOWER(TRIM(COALESCE(kinuy_mishari,''))) IN ('', 'null', 'none', '<null>') THEN NULL ELSE TRIM(kinuy_mishari)END AS kinuy_mishari,
 
-            -- tozeret_nm: NULL handling + standardize manufacturer name variations
+            -- standardize manufacturer name variations
             CASE
                 WHEN LOWER(TRIM(COALESCE(tozeret_nm, ''))) IN ('', 'null', 'none', '<null>') THEN NULL
-                WHEN TRIM(tozeret_nm) ILIKE '%אאודי%' OR TRIM(tozeret_nm) ILIKE '%אודי%'          THEN 'אאודי'
-                WHEN TRIM(tozeret_nm) ILIKE '%אופל%'                                               THEN 'אופל'
-                WHEN TRIM(tozeret_nm) ILIKE '%ב מ וו%' OR TRIM(tozeret_nm) ILIKE '%BMW%'           THEN 'ב.מ.וו'
-                WHEN TRIM(tozeret_nm) ILIKE '%ביואיק%'                                             THEN 'ביואיק'
-                WHEN TRIM(tozeret_nm) ILIKE '%וולבו%'                                              THEN 'וולבו'
-                WHEN TRIM(tozeret_nm) ILIKE '%טויוטה%'                                             THEN 'טויוטה'
-                WHEN TRIM(tozeret_nm) ILIKE '%טסלה%'                                               THEN 'טסלה'
-                WHEN TRIM(tozeret_nm) ILIKE '%יונדאי%'                                             THEN 'יונדאי'
-                WHEN TRIM(tozeret_nm) ILIKE '%יגואר%'                                              THEN 'יגואר'
-                WHEN TRIM(tozeret_nm) ILIKE '%לנדרובר%'                                            THEN 'לנד רובר'
-                WHEN TRIM(tozeret_nm) ILIKE '%לקסוס%'                                              THEN 'לקסוס'
-                WHEN TRIM(tozeret_nm) ILIKE '%מזדה%'                                               THEN 'מזדה'
-                WHEN TRIM(tozeret_nm) ILIKE '%מיני%'                                               THEN 'מיני'
-                WHEN TRIM(tozeret_nm) ILIKE '%מיצובישי%'                                           THEN 'מיצובישי'
-                WHEN TRIM(tozeret_nm) ILIKE '%מרצדס%' OR TRIM(tozeret_nm) ILIKE '%דימלרקריזלר%'   THEN 'מרצדס'
-                WHEN TRIM(tozeret_nm) ILIKE '%ניאו%'                                               THEN 'ניאו'
-                WHEN TRIM(tozeret_nm) ILIKE '%ניסאן%'                                              THEN 'ניסאן'
-                WHEN TRIM(tozeret_nm) ILIKE '%סאאב%'                                               THEN 'סאאב'
-                WHEN TRIM(tozeret_nm) ILIKE '%סאנגיונג%'                                           THEN 'סאנגיונג'
-                WHEN TRIM(tozeret_nm) ILIKE '%סובארו%'                                             THEN 'סובארו'
-                WHEN TRIM(tozeret_nm) ILIKE '%סוזוקי%' OR TRIM(tozeret_nm) ILIKE '%מרוטי%'        THEN 'סוזוקי'
-                WHEN TRIM(tozeret_nm) ILIKE '%סיאט%'                                               THEN 'סיאט'
-                WHEN TRIM(tozeret_nm) ILIKE '%סיטרואן%'                                            THEN 'סיטרואן'
-                WHEN TRIM(tozeret_nm) ILIKE '%סקודה%'                                              THEN 'סקודה'
-                WHEN TRIM(tozeret_nm) ILIKE '%סמארט%'                                              THEN 'סמארט'
-                WHEN TRIM(tozeret_nm) ILIKE '%דאציה%'                                              THEN 'דאציה'
-                WHEN TRIM(tozeret_nm) ILIKE '%דודג%'                                               THEN 'דודג'''
-                WHEN TRIM(tozeret_nm) ILIKE '%דייהטסו%'                                            THEN 'דייהטסו'
-                WHEN TRIM(tozeret_nm) ILIKE '%דייהו%'                                              THEN 'דייהו'
-                WHEN TRIM(tozeret_nm) ILIKE '%האמר%'                                               THEN 'האמר'
-                WHEN TRIM(tozeret_nm) ILIKE '%הונדה%'                                              THEN 'הונדה'
-                WHEN TRIM(tozeret_nm) ILIKE '%פולקסווגן%'                                          THEN 'פולקסווגן'
-                WHEN TRIM(tozeret_nm) ILIKE '%פולסטאר%'                                            THEN 'פולסטאר'
-                WHEN TRIM(tozeret_nm) ILIKE '%פורד%'                                               THEN 'פורד'
-                WHEN TRIM(tozeret_nm) ILIKE '%פורשה%'                                              THEN 'פורשה'
-                WHEN TRIM(tozeret_nm) ILIKE '%פיאט%'                                               THEN 'פיאט'
-                WHEN TRIM(tozeret_nm) ILIKE '%פיג%'                                                THEN 'פיג''ו'
-                WHEN TRIM(tozeret_nm) ILIKE '%קאדילאק%'                                            THEN 'קאדילאק'
-                WHEN TRIM(tozeret_nm) ILIKE '%קיה%'                                                THEN 'קיה'
-                WHEN TRIM(tozeret_nm) ILIKE '%קרייזלר%'                                            THEN 'קרייזלר'
-                WHEN TRIM(tozeret_nm) ILIKE '%רנו%'                                                THEN 'רנו'
-                WHEN TRIM(tozeret_nm) ILIKE '%שברולט%'                                             THEN 'שברולט'
-                WHEN TRIM(tozeret_nm) ILIKE '%איסוזו%'                                             THEN 'איסוזו'
-                WHEN TRIM(tozeret_nm) ILIKE '%לינקולן%'                                            THEN 'לינקולן'
-                WHEN TRIM(tozeret_nm) ILIKE '%לנציה%' OR TRIM(tozeret_nm) ILIKE '%לנצ''יה%'       THEN 'לנציה'
-                WHEN TRIM(tozeret_nm) ILIKE '%די אס%' OR TRIM(tozeret_nm) ILIKE '%די.אס%'          THEN 'די.אס'
-                WHEN TRIM(tozeret_nm) ILIKE '%גיפ%' OR TRIM(tozeret_nm) ILIKE '%ג''יפ%'            THEN 'ג''יפ'
-                WHEN TRIM(tozeret_nm) ILIKE '%ג''י.אמ.סי%' OR TRIM(tozeret_nm) ILIKE '%ג''יי.אמ.סי%'    THEN 'ג''י.אם.סי'
-                WHEN TRIM(tozeret_nm) ILIKE '%גי.אי.סי%' OR TRIM(tozeret_nm) ILIKE '%גיי.איי.סי%' THEN 'גי.אי.סי'
-                WHEN TRIM(tozeret_nm) ILIKE '%בי ווי די%' OR TRIM(tozeret_nm) ILIKE '%BYD%'        THEN 'BYD'
-                WHEN TRIM(tozeret_nm) ILIKE '%גילי%'                                               THEN 'גילי'
-                WHEN TRIM(tozeret_nm) ILIKE '%מ.ג%'                                                THEN 'MG'
-                WHEN TRIM(tozeret_nm) ILIKE '%גרייט וול%'                                         THEN 'גרייט וול'
+                WHEN TRIM(tozeret_nm) ILIKE '%אאודי%' OR TRIM(tozeret_nm) ILIKE '%אודי%'
+                    THEN 'אאודי'
+                WHEN TRIM(tozeret_nm) ILIKE '%אופל%'
+                    THEN 'אופל'
+                WHEN TRIM(tozeret_nm) ILIKE '%ב מ וו%' OR TRIM(tozeret_nm) ILIKE '%BMW%'
+                    THEN 'ב.מ.וו'
+                WHEN TRIM(tozeret_nm) ILIKE '%ביואיק%'
+                    THEN 'ביואיק'
+                WHEN TRIM(tozeret_nm) ILIKE '%וולבו%'
+                    THEN 'וולבו'
+                WHEN TRIM(tozeret_nm) ILIKE '%טויוטה%'
+                    THEN 'טויוטה'
+                WHEN TRIM(tozeret_nm) ILIKE '%טסלה%'
+                    THEN 'טסלה'
+                WHEN TRIM(tozeret_nm) ILIKE '%יונדאי%'
+                    THEN 'יונדאי'
+                WHEN TRIM(tozeret_nm) ILIKE '%יגואר%'
+                    THEN 'יגואר'
+                WHEN TRIM(tozeret_nm) ILIKE '%לנדרובר%'
+                    THEN 'לנד רובר'
+                WHEN TRIM(tozeret_nm) ILIKE '%לקסוס%'
+                    THEN 'לקסוס'
+                WHEN TRIM(tozeret_nm) ILIKE '%מזדה%'
+                    THEN 'מזדה'
+                WHEN TRIM(tozeret_nm) ILIKE '%מיני%'
+                    THEN 'מיני'
+                WHEN TRIM(tozeret_nm) ILIKE '%מיצובישי%'
+                    THEN 'מיצובישי'
+                WHEN TRIM(tozeret_nm) ILIKE '%מרצדס%' OR TRIM(tozeret_nm) ILIKE '%דימלרקריזלר%'
+                    THEN 'מרצדס'
+                WHEN TRIM(tozeret_nm) ILIKE '%ניאו%'
+                    THEN 'ניאו'
+                WHEN TRIM(tozeret_nm) ILIKE '%ניסאן%'
+                    THEN 'ניסאן'
+                WHEN TRIM(tozeret_nm) ILIKE '%סאאב%'
+                    THEN 'סאאב'
+                WHEN TRIM(tozeret_nm) ILIKE '%סאנגיונג%'
+                    THEN 'סאנגיונג'
+                WHEN TRIM(tozeret_nm) ILIKE '%סובארו%'
+                    THEN 'סובארו'
+                WHEN TRIM(tozeret_nm) ILIKE '%סוזוקי%' OR TRIM(tozeret_nm) ILIKE '%מרוטי%'
+                    THEN 'סוזוקי'
+                WHEN TRIM(tozeret_nm) ILIKE '%סיאט%'
+                    THEN 'סיאט'
+                WHEN TRIM(tozeret_nm) ILIKE '%סיטרואן%'
+                    THEN 'סיטרואן'
+                WHEN TRIM(tozeret_nm) ILIKE '%סקודה%'
+                    THEN 'סקודה'
+                WHEN TRIM(tozeret_nm) ILIKE '%סמארט%'
+                    THEN 'סמארט'
+                WHEN TRIM(tozeret_nm) ILIKE '%דאציה%'
+                    THEN 'דאציה'
+                WHEN TRIM(tozeret_nm) ILIKE '%דודג%'
+                    THEN 'דודג'''
+                WHEN TRIM(tozeret_nm) ILIKE '%דייהטסו%'
+                    THEN 'דייהטסו'
+                WHEN TRIM(tozeret_nm) ILIKE '%דייהו%'
+                    THEN 'דייהו'
+                WHEN TRIM(tozeret_nm) ILIKE '%האמר%'
+                    THEN 'האמר'
+                WHEN TRIM(tozeret_nm) ILIKE '%הונדה%'
+                    THEN 'הונדה'
+                WHEN TRIM(tozeret_nm) ILIKE '%פולקסווגן%'
+                    THEN 'פולקסווגן'
+                WHEN TRIM(tozeret_nm) ILIKE '%פולסטאר%'
+                    THEN 'פולסטאר'
+                WHEN TRIM(tozeret_nm) ILIKE '%פורד%'
+                    THEN 'פורד'
+                WHEN TRIM(tozeret_nm) ILIKE '%פורשה%'
+                    THEN 'פורשה'
+                WHEN TRIM(tozeret_nm) ILIKE '%פיאט%'
+                    THEN 'פיאט'
+                WHEN TRIM(tozeret_nm) ILIKE '%פיג%'
+                    THEN 'פיג''ו'
+                WHEN TRIM(tozeret_nm) ILIKE '%קאדילאק%'
+                    THEN 'קאדילאק'
+                WHEN TRIM(tozeret_nm) ILIKE '%קיה%'
+                    THEN 'קיה'
+                WHEN TRIM(tozeret_nm) ILIKE '%קרייזלר%'
+                    THEN 'קרייזלר'
+                WHEN TRIM(tozeret_nm) ILIKE '%רנו%'
+                    THEN 'רנו'
+                WHEN TRIM(tozeret_nm) ILIKE '%שברולט%'
+                    THEN 'שברולט'
+                WHEN TRIM(tozeret_nm) ILIKE '%איסוזו%'
+                    THEN 'איסוזו'
+                WHEN TRIM(tozeret_nm) ILIKE '%לינקולן%'
+                    THEN 'לינקולן'
+                WHEN TRIM(tozeret_nm) ILIKE '%לנציה%' OR TRIM(tozeret_nm) ILIKE '%לנצ''יה%'
+                    THEN 'לנציה'
+                WHEN TRIM(tozeret_nm) ILIKE '%די אס%' OR TRIM(tozeret_nm) ILIKE '%די.אס%'
+                    THEN 'די.אס'
+                WHEN TRIM(tozeret_nm) ILIKE '%גיפ%' OR TRIM(tozeret_nm) ILIKE '%ג''יפ%'
+                    THEN 'ג''יפ'
+                WHEN TRIM(tozeret_nm) ILIKE '%ג''י.אמ.סי%' OR TRIM(tozeret_nm) ILIKE '%ג''יי.אמ.סי%'
+                    THEN 'ג''י.אם.סי'
+                WHEN TRIM(tozeret_nm) ILIKE '%גי.אי.סי%' OR TRIM(tozeret_nm) ILIKE '%גיי.איי.סי%'
+                    THEN 'גי.אי.סי'
+                WHEN TRIM(tozeret_nm) ILIKE '%בי ווי די%' OR TRIM(tozeret_nm) ILIKE '%BYD%'
+                    THEN 'BYD'
+                WHEN TRIM(tozeret_nm) ILIKE '%גילי%'
+                    THEN 'גילי'
+                WHEN TRIM(tozeret_nm) ILIKE '%מ.ג%'
+                    THEN 'MG'
+                WHEN TRIM(tozeret_nm) ILIKE '%גרייט וול%'
+                    THEN 'גרייט וול'
             ELSE TRIM(tozeret_nm)
             END AS tozeret_nm
 
@@ -107,37 +160,82 @@ BEGIN
     )
 
     SELECT
-        CASE WHEN _id ~ '^\d+$'                THEN _id::INTEGER                END,
-        CASE WHEN mispar_rechev ~ '^\d+$'      THEN mispar_rechev::INTEGER       END,
-        CASE WHEN tozeret_cd ~ '^\d+$'         THEN tozeret_cd::INTEGER          END,
+        CASE
+            WHEN _id ~ '^\d+$'
+            THEN _id::INTEGER
+        END,
+
+        CASE
+            WHEN mispar_rechev ~ '^\d+$'
+            THEN mispar_rechev::INTEGER
+        END,
+
+        CASE
+            WHEN tozeret_cd ~ '^\d+$'
+            THEN tozeret_cd::INTEGER
+        END,
+
         sug_degem,
         tozeret_nm,
-        CASE WHEN degem_cd ~ '^\d+$'           THEN degem_cd::INTEGER            END,
+
+        CASE
+            WHEN degem_cd ~ '^\d+$'
+            THEN degem_cd::INTEGER
+        END,
+
         degem_nm,
         ramat_gimur,
-        CASE WHEN ramat_eivzur_betihuty ~ '^\d+(\.\d+)?$'
-             THEN ramat_eivzur_betihuty::NUMERIC::INTEGER                        END,
-        CASE WHEN kvutzat_zihum ~ '^\d+(\.\d+)?$'
-             THEN kvutzat_zihum::NUMERIC::INTEGER                                END,
-        CASE WHEN shnat_yitzur ~ '^\d+$'
+
+        CASE
+            WHEN ramat_eivzur_betihuty ~ '^\d+(\.\d+)?$'
+            THEN ramat_eivzur_betihuty::NUMERIC::INTEGER
+        END,
+
+        CASE
+            WHEN kvutzat_zihum ~ '^\d+(\.\d+)?$'
+            THEN kvutzat_zihum::NUMERIC::INTEGER
+        END,
+
+        CASE
+            WHEN shnat_yitzur ~ '^\d+$'
                   AND shnat_yitzur::INTEGER BETWEEN 1900 AND 2026
-             THEN shnat_yitzur::INTEGER                                          END,
+            THEN shnat_yitzur::INTEGER
+        END,
+
         degem_manoa,
-        CASE WHEN mivchan_acharon_dt ~ '^\d{4}-\d{2}-\d{2}$'
-             THEN mivchan_acharon_dt::DATE                                       END,
-        CASE WHEN tokef_dt ~ '^\d{4}-\d{2}-\d{2}$'
-             THEN tokef_dt::DATE                                                 END,
+
+        CASE
+            WHEN mivchan_acharon_dt ~ '^\d{4}-\d{2}-\d{2}$'
+            THEN mivchan_acharon_dt::DATE
+        END,
+
+        CASE
+            WHEN tokef_dt ~ '^\d{4}-\d{2}-\d{2}$'
+            THEN tokef_dt::DATE
+        END,
+
         baalut,
         misgeret,
-        CASE WHEN tzeva_cd ~ '^\d+$'           THEN tzeva_cd::INTEGER            END,
+        CASE
+            WHEN tzeva_cd ~ '^\d+$'
+            THEN tzeva_cd::INTEGER
+        END,
+
         tzeva_rechev,
         zmig_kidmi,
         zmig_ahori,
         sug_delek_nm,
-        CASE WHEN horaat_rishum ~ '^\d+(\.\d+)?$'
-             THEN horaat_rishum::NUMERIC::INTEGER                                END,
-        CASE WHEN moed_aliya_lakvish ~ '^\d{4}-\d{1,2}$'
-     THEN TO_DATE(moed_aliya_lakvish || '-01', 'YYYY-MM-DD') END,
+
+        CASE
+            WHEN horaat_rishum ~ '^\d+(\.\d+)?$'
+            THEN horaat_rishum::NUMERIC::INTEGER
+        END,
+
+        CASE
+            WHEN moed_aliya_lakvish ~ '^\d{4}-\d{1,2}$'
+            THEN TO_DATE(moed_aliya_lakvish || '-01', 'YYYY-MM-DD')
+        END,
+
         kinuy_mishari
 
     FROM cleaned;
