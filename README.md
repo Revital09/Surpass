@@ -30,7 +30,7 @@ SURPASS/
 ├── DWH/
 │   ├── create_mrr_fct.sql         # Creates mrr_fct schema and table
 │   ├── load_raw_to_db.py          # Loads CSV into mrr_fct.vehicle
-│   ├── DWH Schema.sql             # Creates dwh schema and table (dwh_schema.sql)
+│   ├── dwh_schema.sql             # Creates dwh schema and table (dwh_schema.sql)
 │   ├── dwh_procedure.sql          # Cleans and loads data from mrr_fct to dwh
 │   ├── enrich_dwh.sql             # Adds enriched columns + indexes
 │   └── enrichment_validation.csv  # NULL counts and distribution per enriched field
@@ -104,7 +104,7 @@ Then run the SQL files in this order using DataGrip:
 
 ```
 1. DWH/create_mrr_fct.sql     → creates mrr_fct schema + table
-2. DWH/DWH Schema.sql         → creates dwh schema + table
+2. DWH/dwh_schema.sql         → creates dwh schema + table
 ```
 
 ---
